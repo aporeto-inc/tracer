@@ -1,5 +1,8 @@
+env:
+  PROJECT_VERSION: { { .Version } }
 before:
   hooks:
+    - make init
     - make remod
     - make test
 builds:
@@ -16,7 +19,7 @@ archives:
 checksum:
   name_template: "checksums.txt"
 snapshot:
-  name_template: "{{ .Tag }}-next"
+  name_template: "{{ .Tag }}"
 changelog:
   sort: asc
   filters:

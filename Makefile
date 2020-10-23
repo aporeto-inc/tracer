@@ -3,6 +3,9 @@ PROJECT_NAME = tracer
 PROJECT_SHA ?= $(shell git rev-parse HEAD)
 PROJECT_RELEASE ?= dev
 
+export GO111MODULE = on
+export GOPRIVATE = go.aporeto.io,github.com/aporeto-inc
+
 define VERSIONS_FILE
 package configuration
 

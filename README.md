@@ -4,13 +4,24 @@ Tracer is a tool to query and aggregate metrics and traces from an Aporeto contr
 
 ## Usage
 
+You will need client certificate to query the monitoring API.
+
 ```console
-Usage of ./tracer:
+export TRACER_MONITORING_CERT=/Users/cyril/PCN/pcn-preproduction/certs/auditers/cyril-cert.pem
+export TRACER_MONITORING_CERT_KEY=/Users/cyril/PCN/pcn-preproduction/certs/auditers/cyril-key.pem
+export TRACER_MONITORING_CERT_KEY_PASS="p0ul3t"
+export TRACER_MONITORING_URL=https://monitoring.preprod.network.prismacloud.io
+```
+
+Then you can play, see `--help`
+
+```console
+Usage:
       --code string                       Filters: The code to filter ex:200-300,400-422,500
       --errors-only                       Traces: Look only for trace in error
-      --example                           Show example usage of the command
       --from string                       From date
-      --limit int                         Traces: The number of traces to display (default 2)
+      --help                              Show full help with examples
+      --limit int                         Traces: The number of traces to display (default 1)
       --log-format string                 Log format (default "console")
       --log-level string                  Log level (default "info")
       --monitoring-ca-path string         Path to the monitoring CA certificate
@@ -19,28 +30,14 @@ Usage of ./tracer:
       --monitoring-cert-key-pass string   Password for the monitoring cert key
       --monitoring-url string             The monitoring url to use [required]
       --namespace string                  Traces: Lookg for traces matching that namespace
+      --open string                       Open a given trace to your browser.
       --service strings                   Filters: The service to filter (repeatable)
       --since duration                    Since duration (will compute From and To with currrent date) (default 1h0m0s)
       --slower-than duration              Traces: Look for traces slower than the provided duration
       --to string                         To date
       --url strings                       Filters: The url to filter (repeatable)
   -v, --version                           Display the version
-```
 
-Example of use:
-
-You will need client certificate to query the monitoring API.
-
-```console
-export TRACER_MONITORING_CERT=/Users/cyril/PCN/pcn-preproduction/certs/auditers/cyril-cert.pem
-export TRACER_MONITORING_CERT_KEY=/Users/cyril/PCN/pcn-preproduction/certs/auditers/cyril-key.pem
-export TRACER_MONITORING_CERT_KEY_PASS="
-export TRACER_MONITORING_URL=https://monitoring.preprod.network.prismacloud.io
-```
-
-Then you can play, see `--example`
-
-```console
 > Display all queries with traces from the last 1h
 
   ./tracer --since 1h
@@ -72,6 +69,10 @@ Then you can play, see `--example`
 > Display all 400-403 requests on service squall, cid and /issue between two dates
 
   ./tracer --code 400-403 --service squal --service cid --url /issue --from 2020-10-21T17:56:17Z --to 2020-10-22T17:56:17Z
+
+Some queries are not providing traces (like reports because this is too much for jaeger to handle).
+In general errors are logged in the service in debug mode. Use the switch-debug <service name>  command to enable it.
+And look at the logs either through Grafana->Explore->Loki or with the k get log <pod_name> command.
 ```
 
 Example of output:
