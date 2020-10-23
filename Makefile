@@ -1,4 +1,4 @@
-PROJECT_VERSION ?= v0.0.0-dev
+PROJECT_VERSION ?= $(shell git describe --abbrev=0 --tags)
 PROJECT_NAME = tracer
 PROJECT_SHA ?= $(shell git rev-parse HEAD)
 PROJECT_RELEASE ?= dev
