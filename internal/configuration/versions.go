@@ -4,6 +4,6 @@ package configuration
 var (
 	ProjectName    = "tracer"
 	ProjectVersion = "v1.0.0"
-	ProjectSha     = "af80693848a5f4aacb15e4401d0f3626b6b5cddb"
+	ProjectSha     = "5aacf3abad650efee5ee4c98532150b9f0fbea76"
 	ProjectRelease = "dev"
 )
