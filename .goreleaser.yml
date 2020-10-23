@@ -7,7 +7,7 @@ builds:
   - env:
       - CGO_ENABLED=0
     goarch:
-      - x86_64
+      - amd64
     goos:
       - linux
       - darwin
