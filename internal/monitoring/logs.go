@@ -56,15 +56,16 @@ func (m Client) GetLogs(from, to time.Time, services []string, follow bool, dire
 	}
 
 	q := &query.Query{
-		QueryString:   fmt.Sprintf(`{app=~"%s"}`, strings.Join(services, "|")),
-		Start:         from,
-		End:           to,
-		Limit:         limit,
-		BatchSize:     100,
-		Quiet:         quiet,
-		NoLabels:      false,
-		ShowLabelsKey: []string{"pod"},
-		ColoredOutput: true,
+		QueryString:     fmt.Sprintf(`{app=~"%s"}`, strings.Join(services, "|")),
+		Start:           from,
+		End:             to,
+		Limit:           limit,
+		BatchSize:       100,
+		Quiet:           quiet,
+		NoLabels:        false,
+		ShowLabelsKey:   []string{"pod"},
+		IgnoreLabelsKey: []string{"filename", "stream"},
+		ColoredOutput:   true,
 	}
 
 	outputOptions := &output.LogOutputOptions{
