@@ -46,6 +46,7 @@ type FilterConf struct {
 	URLS     []string `mapstructure:"url" desc:"Filters: The url to filter (repeatable)"`
 }
 
+// LogConf is the configuration realted to logs
 type LogConf struct {
 	Log       bool   `mapstructure:"log" desc:"Logs: Enable log mode to get logs from services"`
 	Direction string `mapstructure:"direction" desc:"Logs: Direction of the logs" default:"forward" allowed:"forward,backward"`

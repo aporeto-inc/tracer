@@ -126,8 +126,6 @@ func main() {
 
 		fmt.Printf("\n> %d results found. You can read the traces from %s/explore and select the jaeger datasource.\n", len(results), cfg.MonitoringURL)
 		fmt.Println("  Or run tracer --open <trace>.")
-	} else {
-		fmt.Println("No results founds with the given parameters.")
 	}
 
 	// Show log if asked
@@ -141,7 +139,9 @@ func main() {
 			quiet = false
 		}
 
-		c.GetLogs(from, to, cfg.Services, cfg.Follow, cfg.Direction, cfg.LogLines, quiet)
+		if err := c.GetLogs(from, to, cfg.Services, cfg.Follow, cfg.Direction, cfg.LogLines, quiet); err != nil {
+			zap.L().Fatal("Unable to get logs", zap.Error(err))
+		}
 
 	}
 

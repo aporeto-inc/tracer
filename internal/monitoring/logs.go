@@ -91,18 +91,6 @@ func (m Client) GetLogs(from, to time.Time, services []string, follow bool, dire
 }
 
 // This a copy paste of the client.go as they mandate the user of username password...
-
-// lokiClient contains all the methods to query a Loki instance, it's an interface to allow multiple implementations.
-type lokiClient interface {
-	Query(queryStr string, limit int, time time.Time, direction logproto.Direction, quiet bool) (*loghttp.QueryResponse, error)
-	QueryRange(queryStr string, limit int, from, through time.Time, direction logproto.Direction, step, interval time.Duration, quiet bool) (*loghttp.QueryResponse, error)
-	ListLabelNames(quiet bool, from, through time.Time) (*loghttp.LabelResponse, error)
-	ListLabelValues(name string, quiet bool, from, through time.Time) (*loghttp.LabelResponse, error)
-	Series(matchers []string, from, through time.Time, quiet bool) (*loghttp.SeriesResponse, error)
-	LiveTailQueryConn(queryStr string, delayFor int, limit int, from int64, quiet bool) (*websocket.Conn, error)
-	GetOrgID() string
-}
-
 // Client contains fields necessary to query a Loki instance
 type defaultLokiClient struct {
 	TLSConfig config.TLSConfig

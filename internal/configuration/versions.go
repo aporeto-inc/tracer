@@ -3,7 +3,7 @@ package configuration
 // Various version information.
 var (
 	ProjectName    = "tracer"
-	ProjectVersion = "v1.0.2"
-	ProjectSha     = "f189de228e61d56c7e9a045b146e3afd37e68d61"
+	ProjectVersion = "v1.1.0"
+	ProjectSha     = "9155dc44bc86cf53e94543a88ae8bae2f57b0105"
 	ProjectRelease = "dev"
 )
