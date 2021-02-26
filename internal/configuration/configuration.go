@@ -12,9 +12,9 @@ import (
 // This is used to proxy all requests to datasources
 type MonitoringConf struct {
 	MonitoringCAPath          string `mapstructure:"monitoring-ca-path"            desc:"Path to the monitoring CA certificate" `
-	MonitoringURL             string `mapstructure:"monitoring-url"                desc:"The monitoring url to use"             required:"true"`
-	MonitoringCertPath        string `mapstructure:"monitoring-cert"               desc:"Path to the monitoring cert"           required:"true"`
-	MonitoringCertKeyPath     string `mapstructure:"monitoring-cert-key"           desc:"Path to the monitoring cert key"       required:"true"`
+	MonitoringURL             string `mapstructure:"monitoring-url"                desc:"The monitoring url to use"             `
+	MonitoringCertPath        string `mapstructure:"monitoring-cert"               desc:"Path to the monitoring cert"           `
+	MonitoringCertKeyPath     string `mapstructure:"monitoring-cert-key"           desc:"Path to the monitoring cert key"       `
 	MonitoringCertKeyPassword string `mapstructure:"monitoring-cert-key-pass"      desc:"Password for the monitoring cert key"  secret:"true"`
 }
 
@@ -46,6 +46,13 @@ type FilterConf struct {
 	URLS     []string `mapstructure:"url" desc:"Filters: The url to filter (repeatable)"`
 }
 
+type LogConf struct {
+	Log       bool   `mapstructure:"log" desc:"Logs: Enable log mode to get logs from services"`
+	Direction string `mapstructure:"direction" desc:"Logs: Direction of the logs" default:"forward" allowed:"forward,backward"`
+	Follow    bool   `mapstructure:"follow" desc:"Logs: Follow logs stream in almost real time"`
+	LogLines  int    `mapstructure:"lines" desc:"Logs: Number of lines to print" default:"10"`
+}
+
 // Configuration hold the service configuration.
 type Configuration struct {
 	LoggingConf    `mapstructure:",squash"`
@@ -53,9 +60,10 @@ type Configuration struct {
 	MonitoringConf `mapstructure:",squash"`
 	TimeWindow     `mapstructure:",squash"`
 	TraceConf      `mapstructure:",squash"`
+	LogConf        `mapstructure:",squash"`
 
 	Help bool   `mapstructure:"help" desc:"Show full help with examples"`
-	Open string `mapstructure:"open" desc:"Open a given trace to your browser."`
+	Open string `mapstructure:"open" desc:"Traces: Open a given trace to your browser."`
 }
 
 // Prefix returns the configuration prefix.

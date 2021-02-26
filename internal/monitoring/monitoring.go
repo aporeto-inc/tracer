@@ -17,6 +17,7 @@ import (
 type Client struct {
 	client http.Client
 	url    *url.URL
+	cfg    configuration.MonitoringConf
 }
 
 // NewClient return a new montitoring.Client
@@ -67,6 +68,6 @@ func NewClient(cfg configuration.MonitoringConf) (*Client, error) {
 			},
 		},
 	},
-		url: url}, nil
+		url: url, cfg: cfg}, nil
 
 }

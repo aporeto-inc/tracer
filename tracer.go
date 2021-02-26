@@ -130,4 +130,19 @@ func main() {
 		fmt.Println("No results founds with the given parameters.")
 	}
 
+	// Show log if asked
+	if cfg.Log {
+		if len(cfg.Services) == 0 {
+			zap.L().Fatal("The log flag requires the service flag")
+		}
+
+		quiet := true
+		if cfg.LogLevel == "debug" {
+			quiet = false
+		}
+
+		c.GetLogs(from, to, cfg.Services, cfg.Follow, cfg.Direction, cfg.LogLines, quiet)
+
+	}
+
 }
