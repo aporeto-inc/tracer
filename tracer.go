@@ -139,7 +139,7 @@ func main() {
 			quiet = false
 		}
 
-		if err := c.GetLogs(from, to, cfg.Services, cfg.Follow, cfg.Direction, cfg.LogLines, quiet); err != nil {
+		if err := c.GetLogs(from, to, cfg.Services, cfg.LogConf, quiet); err != nil {
 			zap.L().Fatal("Unable to get logs", zap.Error(err))
 		}
 

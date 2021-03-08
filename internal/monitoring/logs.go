@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/aporeto-inc/tracer/internal/configuration"
 	"github.com/gorilla/websocket"
 	"github.com/grafana/loki/pkg/logcli/output"
 	"github.com/grafana/loki/pkg/logcli/query"
@@ -37,7 +38,7 @@ var (
 )
 
 // GetLogs try to get the logs for a service and and a time window
-func (m Client) GetLogs(from, to time.Time, services []string, follow bool, direction string, limit int, quiet bool) error {
+func (m Client) GetLogs(from, to time.Time, services []string, cfg configuration.LogConf, quiet bool) error {
 
 	lokiProxy, err := m.url.Parse("api/datasources/proxy/2")
 	if err != nil {
@@ -56,13 +57,13 @@ func (m Client) GetLogs(from, to time.Time, services []string, follow bool, dire
 	}
 
 	q := &query.Query{
-		QueryString:     fmt.Sprintf(`{app=~"%s"}`, strings.Join(services, "|")),
+		QueryString:     fmt.Sprintf(`{app=~"%s"} %s`, strings.Join(services, "|"), cfg.LogFilter),
 		Start:           from,
 		End:             to,
-		Limit:           limit,
+		Limit:           cfg.LogLines,
 		BatchSize:       100,
 		Quiet:           quiet,
-		NoLabels:        false,
+		NoLabels:        cfg.LogNoLabels,
 		ShowLabelsKey:   []string{"pod"},
 		IgnoreLabelsKey: []string{"filename", "stream"},
 		ColoredOutput:   true,
@@ -73,7 +74,7 @@ func (m Client) GetLogs(from, to time.Time, services []string, follow bool, dire
 		ColoredOutput: q.ColoredOutput,
 	}
 
-	if direction == "forward" {
+	if cfg.Direction == "forward" {
 		q.Forward = true
 	}
 
@@ -82,7 +83,7 @@ func (m Client) GetLogs(from, to time.Time, services []string, follow bool, dire
 		return err
 	}
 
-	if follow {
+	if cfg.Follow {
 		q.TailQuery(0, client, out)
 	} else {
 		q.DoQuery(client, out, false)

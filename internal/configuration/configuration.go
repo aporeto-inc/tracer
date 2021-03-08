@@ -48,10 +48,12 @@ type FilterConf struct {
 
 // LogConf is the configuration realted to logs
 type LogConf struct {
-	Log       bool   `mapstructure:"log" desc:"Logs: Enable log mode to get logs from services"`
-	Direction string `mapstructure:"direction" desc:"Logs: Direction of the logs" default:"forward" allowed:"forward,backward"`
-	Follow    bool   `mapstructure:"follow" desc:"Logs: Follow logs stream in almost real time"`
-	LogLines  int    `mapstructure:"lines" desc:"Logs: Number of lines to print" default:"10"`
+	Log         bool   `mapstructure:"log" desc:"Logs: Enable log mode to get logs from services"`
+	Direction   string `mapstructure:"direction" desc:"Logs: Direction of the logs" default:"forward" allowed:"forward,backward"`
+	Follow      bool   `mapstructure:"follow" desc:"Logs: Follow logs stream in almost real time"`
+	LogLines    int    `mapstructure:"lines" desc:"Logs: Number of lines to print" default:"10"`
+	LogFilter   string `mapstructure:"log-filter" desc:"Logs; Optional log filter to append to log query"`
+	LogNoLabels bool   `mapstructure:"no-labels" desc:"Logs: Do not display labels with logs"`
 }
 
 // Configuration hold the service configuration.

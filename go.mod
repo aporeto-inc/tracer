@@ -14,7 +14,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	go.aporeto.io/addedeffect v1.77.1-0.20210203175020-43e10db0c1dd
 	go.aporeto.io/elemental v1.100.1-0.20210116012353-bf59238510ef
-	go.aporeto.io/gaia v1.94.1-0.20210226145612-664867cdace1
+	go.aporeto.io/gaia v1.94.1-0.20210302200024-c4bbb77ac9a2
 	go.aporeto.io/tg v1.34.1-0.20210128000739-9dff3a820553
 	go.aporeto.io/underwater v1.148.0
 	go.uber.org/zap v1.16.0
