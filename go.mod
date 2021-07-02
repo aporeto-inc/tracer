@@ -12,11 +12,11 @@ require (
 	github.com/prometheus/common v0.10.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/pflag v1.0.5
-	go.aporeto.io/addedeffect v1.77.1-0.20210203175020-43e10db0c1dd
-	go.aporeto.io/elemental v1.100.1-0.20210116012353-bf59238510ef
-	go.aporeto.io/gaia v1.94.1-0.20210302200024-c4bbb77ac9a2
-	go.aporeto.io/tg v1.34.1-0.20210128000739-9dff3a820553
-	go.aporeto.io/underwater v1.148.0
+	go.aporeto.io/addedeffect v1.77.1-0.20210630212802-34063134b871
+	go.aporeto.io/elemental v1.100.1-0.20210630205640-d4330d5ba464
+	go.aporeto.io/gaia v1.94.1-0.20210701231023-b77f8658f7cf
+	go.aporeto.io/tg v1.34.1-0.20210528201128-159c302ba155
+	go.aporeto.io/underwater v1.170.0
 	go.uber.org/zap v1.16.0
 )
 
