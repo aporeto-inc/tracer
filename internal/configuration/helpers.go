@@ -71,7 +71,7 @@ func openTrace(u, trace string) {
 	toOpen.Path = "explore"
 	q, _ := url.ParseQuery(toOpen.RawQuery)
 	q.Add("orgId", "1")
-	q.Add("left", fmt.Sprintf(`["now-1h","now","jaeger-aporeto",{"query":"%s"},{"ui":[true,true,true,"none"]}]`, trace))
+	q.Add("left", fmt.Sprintf(`["now-1h","now","platform-traces",{"query":"%s"},{"ui":[true,true,true,"none"]}]`, trace))
 
 	toOpen.RawQuery = q.Encode()
 
