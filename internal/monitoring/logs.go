@@ -57,7 +57,12 @@ func (m Client) GetLogs(from, to time.Time, services []string, cfg configuration
 	}
 
 	q := &query.Query{
-		QueryString:     fmt.Sprintf(`{app=~"%s"} %s`, strings.Join(services, "|"), cfg.LogFilter),
+		QueryString: func() string {
+			if len(services) > 0 {
+				return fmt.Sprintf(`{app=~"%s"} %s`, strings.Join(services, "|"), cfg.LogFilter)
+			}
+			return cfg.LogFilter
+		}(),
 		Start:           from,
 		End:             to,
 		Limit:           cfg.LogLines,

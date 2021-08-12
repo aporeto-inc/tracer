@@ -52,6 +52,14 @@ func showHelp() {
 
   ./tracer --log --service squal --service cid --from 2020-10-21T17:56:17Z --to 2020-10-22T17:56:17Z
 
+> Display logs with a custom filter for a given service
+
+  ./tracer --log --service squall --log-filter '|~"ERROR"'
+
+> Displau logs with a custom filter
+
+  ./tracer --log --log-filter '{type="aporeto",app!~"squall|wutai.*"}|~"ERROR|WARNING"'
+
 Some queries are not providing traces (like reports because this is too much for jaeger to handle).
 In general errors are logged in the service in debug mode. Use the switch-debug <service name>  command to enable it.
 And look at the logs either through Grafana->Explore->Loki or with the k get log <pod_name> command.
