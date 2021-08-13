@@ -2,10 +2,8 @@ package configuration
 
 import (
 	"fmt"
-	"net/url"
 	"os"
 
-	"github.com/skratchdot/open-golang/open"
 	"github.com/spf13/pflag"
 )
 
@@ -64,28 +62,5 @@ Some queries are not providing traces (like reports because this is too much for
 In general errors are logged in the service in debug mode. Use the switch-debug <service name>  command to enable it.
 And look at the logs either through Grafana->Explore->Loki or with the k get log <pod_name> command.
 `)
-	os.Exit(0)
-}
-
-// openTrace will open a trace in the browser
-func openTrace(u, trace string) {
-
-	toOpen, err := url.Parse(u)
-	if err != nil {
-		fmt.Println("Invalid url: ", err)
-		return
-	}
-
-	toOpen.Path = "explore"
-	q, _ := url.ParseQuery(toOpen.RawQuery)
-	q.Add("orgId", "1")
-	q.Add("left", fmt.Sprintf(`["now-1h","now","platform-traces",{"query":"%s"},{"ui":[true,true,true,"none"]}]`, trace))
-
-	toOpen.RawQuery = q.Encode()
-
-	err = open.Run(toOpen.String())
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Open this URL in your browser:", toOpen)
-	}
 	os.Exit(0)
 }

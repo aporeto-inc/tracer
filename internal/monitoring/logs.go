@@ -38,9 +38,9 @@ var (
 )
 
 // GetLogs try to get the logs for a service and and a time window
-func (m Client) GetLogs(from, to time.Time, services []string, cfg configuration.LogConf, quiet bool) error {
+func (m Client) GetLogs(proxy int, from, to time.Time, services []string, cfg configuration.LogConf, quiet bool) error {
 
-	lokiProxy, err := m.url.Parse("api/datasources/proxy/2")
+	lokiProxy, err := m.url.Parse(fmt.Sprintf("api/datasources/proxy/%d", proxy))
 	if err != nil {
 		panic(err)
 	}

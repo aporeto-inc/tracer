@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"go.aporeto.io/addedeffect/lombric"
+	"go.aporeto.io/underwater/logutils"
 )
 
 // MonitoringConf hold the grafana configuration
@@ -65,8 +66,10 @@ type Configuration struct {
 	TraceConf      `mapstructure:",squash"`
 	LogConf        `mapstructure:",squash"`
 
-	Help bool   `mapstructure:"help" desc:"Show full help with examples"`
-	Open string `mapstructure:"open" desc:"Traces: Open a given trace to your browser."`
+	Help        bool   `mapstructure:"help" desc:"Show full help with examples"`
+	Open        string `mapstructure:"open" desc:"Traces: Open a given trace to your browser."`
+	ProfileFile string `mapstructure:"profile-file" desc:"Profile file: the profile file pathto use." default:"~/.tracer/default.yaml"`
+	Stack       string `mapstructure:"stack" desc:"Stack: The stack name to use if any." default:"default"`
 }
 
 // Prefix returns the configuration prefix.
@@ -82,13 +85,10 @@ func NewConfiguration() *Configuration {
 
 	c := &Configuration{}
 	lombric.Initialize(c)
+	logutils.Configure(c.LogLevel, c.LogFormat)
 
 	if c.Help {
 		showHelp()
-	}
-
-	if c.Open != "" {
-		openTrace(c.MonitoringURL, c.Open)
 	}
 
 	return c

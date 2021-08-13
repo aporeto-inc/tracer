@@ -3,20 +3,22 @@ module github.com/aporeto-inc/tracer
 go 1.15
 
 require (
+	github.com/ghodss/yaml v1.0.0
 	github.com/google/go-querystring v1.0.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/grafana/loki v1.6.1
 	github.com/json-iterator/go v1.1.10
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.4
 	github.com/prometheus/client_golang v1.7.1
 	github.com/prometheus/common v0.10.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/pflag v1.0.5
-	go.aporeto.io/addedeffect v1.77.1-0.20210630212802-34063134b871
-	go.aporeto.io/elemental v1.100.1-0.20210630205640-d4330d5ba464
-	go.aporeto.io/gaia v1.94.1-0.20210701231023-b77f8658f7cf
+	go.aporeto.io/addedeffect v1.77.1-0.20210712170110-99106a2bc164
+	go.aporeto.io/elemental v1.100.1-0.20210706184354-966eab3720af
+	go.aporeto.io/gaia v1.94.1-0.20210809205629-5ee0a82171f5
 	go.aporeto.io/tg v1.34.1-0.20210528201128-159c302ba155
-	go.aporeto.io/underwater v1.170.0
+	go.aporeto.io/underwater v1.183.0
 	go.uber.org/zap v1.16.0
 )
 

@@ -50,16 +50,16 @@ func (a ByCount) Less(i, j int) bool { return a[i].Count < a[j].Count }
 func (a ByCount) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 
 // GetAPIErrors retrieve the errors metrics from prometheus as APiErrors
-func (m Client) GetAPIErrors(since time.Duration, at time.Time) (APIErrors, error) {
+func (m Client) GetAPIErrors(proxy int, since time.Duration, at time.Time) (APIErrors, error) {
 
 	// query the errors
-	errRes, err := m.queryPrometheus(fmt.Sprintf("sum(delta(http_requests_total{code!~'0|500'}[%ds])) by (service,code,method,url) >0", int(since.Seconds())), at)
+	errRes, err := m.queryPrometheus(proxy, fmt.Sprintf("sum(delta(http_requests_total{code!~'0|500'}[%ds])) by (service,code,method,url) >0", int(since.Seconds())), at)
 	if err != nil {
 		return nil, err
 	}
 
 	// query the 500
-	panicRes, err := m.queryPrometheus(fmt.Sprintf("count((http_errors_5xx_total{code='500'} > 0 unless http_errors_5xx_total{code='500'} offset %ds) or ((http_errors_5xx_total{code='500'} - http_errors_5xx_total{code='500'} offset %ds) >0)) by (service,code,method,url) >0", int(since.Seconds()), int(since.Seconds())), at)
+	panicRes, err := m.queryPrometheus(proxy, fmt.Sprintf("count((http_errors_5xx_total{code='500'} > 0 unless http_errors_5xx_total{code='500'} offset %ds) or ((http_errors_5xx_total{code='500'} - http_errors_5xx_total{code='500'} offset %ds) >0)) by (service,code,method,url) >0", int(since.Seconds()), int(since.Seconds())), at)
 	if err != nil {
 		return nil, err
 	}
@@ -68,9 +68,9 @@ func (m Client) GetAPIErrors(since time.Duration, at time.Time) (APIErrors, erro
 
 }
 
-func (m Client) queryPrometheus(query string, at time.Time) (APIErrors, error) {
+func (m Client) queryPrometheus(proxy int, query string, at time.Time) (APIErrors, error) {
 
-	promProxy, err := url.Parse("api/datasources/proxy/1")
+	promProxy, err := url.Parse(fmt.Sprintf("api/datasources/proxy/%d", proxy))
 	if err != nil {
 		panic(err)
 	}

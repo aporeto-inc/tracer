@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/aporeto-inc/tracer/internal/configuration"
+	"github.com/aporeto-inc/tracer/internal/profiles"
 	"go.aporeto.io/tg/tglib"
 )
 
@@ -17,11 +17,11 @@ import (
 type Client struct {
 	client http.Client
 	url    *url.URL
-	cfg    configuration.MonitoringConf
+	cfg    *profiles.Datasource
 }
 
 // NewClient return a new montitoring.Client
-func NewClient(cfg configuration.MonitoringConf) (*Client, error) {
+func NewClient(cfg *profiles.Datasource) (*Client, error) {
 
 	url, err := url.Parse(cfg.MonitoringURL)
 	if err != nil {

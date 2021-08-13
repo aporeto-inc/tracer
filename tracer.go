@@ -9,8 +9,8 @@ import (
 
 	"github.com/aporeto-inc/tracer/internal/configuration"
 	"github.com/aporeto-inc/tracer/internal/monitoring"
+	"github.com/aporeto-inc/tracer/internal/profiles"
 	"github.com/aporeto-inc/tracer/internal/utils"
-	"go.aporeto.io/underwater/logutils"
 	"go.uber.org/zap"
 )
 
@@ -18,7 +18,11 @@ import (
 func main() {
 
 	cfg := configuration.NewConfiguration()
-	logutils.Configure(cfg.LogLevel, cfg.LogFormat)
+	datasource := profiles.NewProfile(cfg)
+
+	if cfg.Open != "" {
+		monitoring.OpenTrace(datasource.MonitoringURL, datasource.TracesDataSourceName, cfg.Open)
+	}
 
 	var err error
 	var from, to time.Time
@@ -29,7 +33,7 @@ func main() {
 	}
 
 	// Create monitoring client
-	c, err := monitoring.NewClient(cfg.MonitoringConf)
+	c, err := monitoring.NewClient(datasource)
 	if err != nil {
 		zap.L().Fatal("Unable to create monitoring client", zap.Error(err))
 	}
@@ -38,11 +42,24 @@ func main() {
 	if err = c.Ping(); err != nil {
 		zap.L().Fatal("Unable to connect to monitoring", zap.Error(err))
 	}
-	if len(cfg.Services) > 0 {
+
+	// Show log if asked
+	if cfg.Log || cfg.LogFilter != "" {
+
+		quiet := true
+		if cfg.LogLevel == "debug" {
+			quiet = false
+		}
+
+		if err := c.GetLogs(datasource.LogsIndex, from, to, cfg.Services, cfg.LogConf, quiet); err != nil {
+			zap.L().Fatal("Unable to get logs", zap.Error(err))
+		}
+
+	} else {
 
 		var results monitoring.APIErrors
 		// Get the metrics
-		results, err = c.GetAPIErrors(since, to)
+		results, err = c.GetAPIErrors(datasource.MetricsIndex, since, to)
 		if err != nil {
 			zap.L().Fatal("Unable to query prometheus", zap.Error(err))
 		}
@@ -87,7 +104,7 @@ func main() {
 					params.Tags["req.namespace"] = cfg.Namespace
 				}
 
-				traceResults, err := c.GetTraceIDs(params)
+				traceResults, err := c.GetTraceIDs(datasource.TracesIndex, params)
 				if err != nil {
 					zap.L().Error("Failed to retrieve traces for error", zap.Error(err))
 					return
@@ -126,22 +143,8 @@ func main() {
 			}()))
 
 			fmt.Printf("\n> %d results found. You can read the traces from %s/explore and select the jaeger datasource.\n", len(results), cfg.MonitoringURL)
-			fmt.Println("  Or run tracer --open <trace>.")
+			fmt.Println("  Or run tracer [--stack <name>] --open <trace>.")
 		}
-	}
-
-	// Show log if asked
-	if cfg.Log {
-
-		quiet := true
-		if cfg.LogLevel == "debug" {
-			quiet = false
-		}
-
-		if err := c.GetLogs(from, to, cfg.Services, cfg.LogConf, quiet); err != nil {
-			zap.L().Fatal("Unable to get logs", zap.Error(err))
-		}
-
 	}
 
 }

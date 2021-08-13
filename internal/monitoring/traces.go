@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"github.com/google/go-querystring/query"
+	"github.com/skratchdot/open-golang/open"
 	"go.uber.org/zap"
 )
 
@@ -45,9 +47,9 @@ type traceResult struct {
 }
 
 // GetTraceIDs try to find traces id related to errors seen in metrics
-func (m Client) GetTraceIDs(params TracingQueryParameters) ([]string, error) {
+func (m Client) GetTraceIDs(proxy int, params TracingQueryParameters) ([]string, error) {
 
-	jaegerProxy, err := url.Parse("api/datasources/proxy/3/api/traces")
+	jaegerProxy, err := url.Parse(fmt.Sprintf("api/datasources/proxy/%d/api/traces", proxy))
 	if err != nil {
 		panic(err)
 	}
@@ -84,4 +86,27 @@ func (m Client) GetTraceIDs(params TracingQueryParameters) ([]string, error) {
 		}
 		return res
 	}(), nil
+}
+
+// OpenTrace will open a trace in the browser
+func OpenTrace(u, datasource, trace string) {
+
+	toOpen, err := url.Parse(u)
+	if err != nil {
+		fmt.Println("Invalid url: ", err)
+		return
+	}
+
+	toOpen.Path = "explore"
+	q, _ := url.ParseQuery(toOpen.RawQuery)
+	q.Add("orgId", "1")
+	q.Add("left", fmt.Sprintf(`["now-24h","now","%s",{"query":"%s"}]`, datasource, trace))
+
+	toOpen.RawQuery = q.Encode()
+
+	err = open.Run(toOpen.String())
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Open this URL in your browser:", toOpen)
+	}
+	os.Exit(0)
 }

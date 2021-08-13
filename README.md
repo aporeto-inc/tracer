@@ -7,10 +7,10 @@ Tracer is a tool to query and aggregate metrics and traces from an Aporeto contr
 You will need client certificate to query the monitoring API.
 
 ```console
-export TRACER_MONITORING_CERT=/Users/cyril/PCN/pcn-preproduction/certs/auditers/cyril-cert.pem
-export TRACER_MONITORING_CERT_KEY=/Users/cyril/PCN/pcn-preproduction/certs/auditers/cyril-key.pem
+export TRACER_MONITORING_CERT=/path/to/cert.pem
+export TRACER_MONITORING_CERT_KEY=/path/to/key.pem
 export TRACER_MONITORING_CERT_KEY_PASS="p0ul3t"
-export TRACER_MONITORING_URL=https://monitoring.preprod.network.prismacloud.io
+export TRACER_MONITORING_URL=https://monitoring.poulet.com
 ```
 
 Then you can play, see `--help`
@@ -18,25 +18,34 @@ Then you can play, see `--help`
 ```console
 Usage:
       --code string                       Filters: The code to filter ex:200-300,400-422,500
+      --direction string                  Logs: Direction of the logs [allowed: forward,backward] (default "forward")
       --errors-only                       Traces: Look only for trace in error
+      --follow                            Logs: Follow logs stream in almost real time
       --from string                       From date
       --help                              Show full help with examples
       --limit int                         Traces: The number of traces to display (default 1)
+      --lines int                         Logs: Number of lines to print (default 10)
+      --log                               Logs: Enable log mode to get logs from services
+      --log-filter string                 Logs; Optional log filter to append to log query
       --log-format string                 Log format (default "console")
       --log-level string                  Log level (default "info")
       --monitoring-ca-path string         Path to the monitoring CA certificate
-      --monitoring-cert string            Path to the monitoring cert [required]
-      --monitoring-cert-key string        Path to the monitoring cert key [required]
+      --monitoring-cert string            Path to the monitoring cert
+      --monitoring-cert-key string        Path to the monitoring cert key
       --monitoring-cert-key-pass string   Password for the monitoring cert key
-      --monitoring-url string             The monitoring url to use [required]
+      --monitoring-url string             The monitoring url to use
       --namespace string                  Traces: Lookg for traces matching that namespace
-      --open string                       Open a given trace to your browser.
+      --no-labels                         Logs: Do not display labels with logs
+      --open string                       Traces: Open a given trace to your browser.
+      --profile-file string               Profile file: the profile file pathto use. (default "~/.tracer/default.yaml")
       --service strings                   Filters: The service to filter (repeatable)
       --since duration                    Since duration (will compute From and To with currrent date) (default 1h0m0s)
       --slower-than duration              Traces: Look for traces slower than the provided duration
+      --stack string                      Stack: The stack name to use if any. (default "default")
       --to string                         To date
       --url strings                       Filters: The url to filter (repeatable)
   -v, --version                           Display the version
+
 
 > Display all queries with traces from the last 1h
 
@@ -69,6 +78,18 @@ Usage:
 > Display all 400-403 requests on service squall, cid and /issue between two dates
 
   ./tracer --code 400-403 --service squal --service cid --url /issue --from 2020-10-21T17:56:17Z --to 2020-10-22T17:56:17Z
+
+> Display logs for 2 services between two dates
+
+  ./tracer --log --service squal --service cid --from 2020-10-21T17:56:17Z --to 2020-10-22T17:56:17Z
+
+> Display logs with a custom filter for a given service
+
+  ./tracer --log --service squall --log-filter '|~"ERROR"'
+
+> Displau logs with a custom filter
+
+  ./tracer --log --log-filter '{type="aporeto",app!~"squall|wutai.*"}|~"ERROR|WARNING"'
 
 Some queries are not providing traces (like reports because this is too much for jaeger to handle).
 In general errors are logged in the service in debug mode. Use the switch-debug <service name>  command to enable it.
@@ -107,7 +128,27 @@ Example of output:
     278 | zack          | dnslookupreport      | create        | /dnslookupreports          |  204 |
 
 
-> 23 results found. You can read the traces from https://monitoring.preprod.network.prismacloud.io/explore and select the jaeger datasource.
+> 23 results found. You can read the traces from https://monitoring.poulet.com/explore and select the jaeger datasource.
 ```
 
 > Note: some query are not generating traces, in general the reports because there is too much of them.
+
+## Profiles
+
+You can create profiles see the `--profile-file` flag with default value `~/.tracer/default.yaml` as:
+
+```yaml
+datasources:
+  - name: default
+    monitoringCAPath: /path/to/ca-chain-public.pem
+    monitoringCertPath: /path/to/cert.pem
+    monitoringCertKeyPath: /path/to/key.pem
+    monitoringURL: https://monitor.default.poulet.com
+  - name: foo
+    monitoringCAPath: /path/to/ca-chain-public.pem
+    monitoringCertPath: /path/to/cert.pem
+    monitoringCertKeyPath: /path/to/key.pem
+    monitoringURL: https://monitor.foo.poulet.com
+```
+
+Then use select a profile with `--stack <name>` flag.
