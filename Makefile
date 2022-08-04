@@ -25,7 +25,7 @@ init:
 	@echo "$$VERSIONS_FILE" > ./internal/configuration/versions.go
 
 remod:
-	@cd /tmp && go get go.aporeto.io/remod@master
+	@cd /tmp && go install go.aporeto.io/remod@master
 	@ case "${PROJECT_BRANCH}" in \
 	release-*) remod up go.aporeto.io --version "${PROJECT_BRANCH}" ;; \
 	*) remod up go.aporeto.io --version "master" ;; \
