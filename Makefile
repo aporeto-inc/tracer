@@ -42,8 +42,6 @@ lint: init
 		--enable=revive \
 		--enable=unused \
 		--enable=staticcheck \
-		--enable=varcheck \
-		--enable=deadcode \
 		--enable=unconvert \
 		--enable=misspell \
 		--enable=prealloc \

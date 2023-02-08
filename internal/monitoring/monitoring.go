@@ -4,9 +4,9 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"github.com/aporeto-inc/tracer/internal/profiles"
@@ -35,7 +35,7 @@ func NewClient(cfg *profiles.Datasource) (*Client, error) {
 
 	if cfg.MonitoringCAPath != "" {
 
-		publicCACertData, err := ioutil.ReadFile(cfg.MonitoringCAPath)
+		publicCACertData, err := os.ReadFile(cfg.MonitoringCAPath)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read provided ca: %w", err)
 		}

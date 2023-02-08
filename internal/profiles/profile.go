@@ -1,8 +1,8 @@
+// Package profiles contains profile creation and parsing logic
 package profiles
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/aporeto-inc/tracer/internal/configuration"
@@ -118,7 +118,7 @@ func parseProfile(profile string) (*Profiles, error) {
 
 	zap.L().Debug("Profile found", zap.String("path", profile))
 
-	data, err := ioutil.ReadFile(profile)
+	data, err := os.ReadFile(profile)
 	if err != nil {
 		return nil, err
 	}

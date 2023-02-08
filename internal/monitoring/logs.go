@@ -1,8 +1,9 @@
+// Package monitoring provides loki related monitoring logic
 package monitoring
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -251,7 +252,7 @@ func (c *defaultLokiClient) doRequest(path, query string, quiet bool, out interf
 	}()
 
 	if resp.StatusCode/100 != 2 {
-		buf, _ := ioutil.ReadAll(resp.Body) // nolint
+		buf, _ := io.ReadAll(resp.Body) // nolint
 		return fmt.Errorf("Error response from server: %s (%v)", string(buf), err)
 	}
 
@@ -294,7 +295,7 @@ func (c *defaultLokiClient) wsConnect(path, query string, quiet bool) (*websocke
 		if resp == nil {
 			return nil, err
 		}
-		buf, _ := ioutil.ReadAll(resp.Body) // nolint
+		buf, _ := io.ReadAll(resp.Body) // nolint
 		return nil, fmt.Errorf("Error response from server: %s (%v)", string(buf), err)
 	}
 

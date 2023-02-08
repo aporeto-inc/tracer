@@ -1,3 +1,4 @@
+// Package main provides the main definition of tracer, a CLI utility for interacting with our observability stack.
 package main
 
 import (
