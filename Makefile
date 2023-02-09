@@ -1,37 +1,7 @@
-PROJECT_VERSION ?= $(shell git describe --abbrev=0 --tags)
-PROJECT_NAME = tracer
-PROJECT_SHA ?= $(shell git rev-parse HEAD)
-PROJECT_RELEASE ?= dev
-
 export GO111MODULE = on
 export GOPRIVATE = go.aporeto.io,github.com/aporeto-inc
 
-define VERSIONS_FILE
-package configuration
-
-// Various version information.
-var (
-	ProjectName    = "$(PROJECT_NAME)"
-	ProjectVersion = "$(PROJECT_VERSION)"
-	ProjectSha     = "$(PROJECT_SHA)"
-	ProjectRelease = "$(PROJECT_RELEASE)"
-)
-endef
-export VERSIONS_FILE
-
-init:
-	# go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
-	@echo generating versions.go
-	@echo "$$VERSIONS_FILE" > ./internal/configuration/versions.go
-
-remod:
-	@cd /tmp && go install go.aporeto.io/remod@master
-	@ case "${PROJECT_BRANCH}" in \
-	release-*) remod up go.aporeto.io --version "${PROJECT_BRANCH}" ;; \
-	*) remod up go.aporeto.io --version "master" ;; \
-	esac;
-
-lint: init
+lint: 
 	golangci-lint run \
 		--deadline=5m \
 		--disable-all \

@@ -15,14 +15,13 @@ import (
 
 // Client is a monitoring client that can query the monitoring stacks
 type Client struct {
-	client http.Client
 	url    *url.URL
 	cfg    *profiles.Datasource
+	client http.Client
 }
 
 // NewClient return a new montitoring.Client
 func NewClient(cfg *profiles.Datasource) (*Client, error) {
-
 	url, err := url.Parse(cfg.MonitoringURL)
 	if err != nil {
 		return nil, fmt.Errorf("unable to parse url: %w", err)
@@ -40,7 +39,7 @@ func NewClient(cfg *profiles.Datasource) (*Client, error) {
 			return nil, fmt.Errorf("cannot read provided ca: %w", err)
 		}
 
-		//In case the pool is empty
+		// In case the pool is empty
 		if pool == nil {
 			pool = x509.NewCertPool()
 		}
@@ -59,15 +58,16 @@ func NewClient(cfg *profiles.Datasource) (*Client, error) {
 		return nil, fmt.Errorf("cannot convert provided monitoring certificate: %w", err)
 	}
 
-	return &Client{client: http.Client{
-		Timeout: 120 * time.Second,
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				RootCAs:      pool,
-				Certificates: []tls.Certificate{clientCert},
+	return &Client{
+		client: http.Client{
+			Timeout: 120 * time.Second,
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{
+					RootCAs:      pool,
+					Certificates: []tls.Certificate{clientCert},
+				},
 			},
 		},
-	},
-		url: url, cfg: cfg}, nil
-
+		url: url, cfg: cfg,
+	}, nil
 }

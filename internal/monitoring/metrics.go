@@ -23,20 +23,19 @@ type APIErrors []APIError
 
 // APIError repesent an API error
 type APIError struct {
-	Code      int
 	Service   string
 	Identity  string
 	Operation string
 	Method    string
 	URL       string
-	Count     int
 	Traces    []string
+	Code      int
+	Count     int
 }
 
 // Hash return a unique identifier for an error
 // based on url code and operation
 func (a APIError) Hash() uint32 {
-
 	h := fnv.New32a()
 	h.Write([]byte(fmt.Sprintf("%d", a.Code) + a.URL + a.Method)) // nolint
 	return h.Sum32()
@@ -51,7 +50,6 @@ func (a ByCount) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 
 // GetAPIErrors retrieve the errors metrics from prometheus as APiErrors
 func (m Client) GetAPIErrors(proxy int, since time.Duration, at time.Time) (APIErrors, error) {
-
 	// query the errors
 	errRes, err := m.queryPrometheus(proxy, fmt.Sprintf("sum(delta(http_requests_total{code!~'0|500'}[%ds])) by (service,code,method,url) >0", int(since.Seconds())), at)
 	if err != nil {
@@ -65,11 +63,9 @@ func (m Client) GetAPIErrors(proxy int, since time.Duration, at time.Time) (APIE
 	}
 
 	return append(errRes, panicRes...), nil
-
 }
 
 func (m Client) queryPrometheus(proxy int, query string, at time.Time) (APIErrors, error) {
-
 	promProxy, err := url.Parse(fmt.Sprintf("api/datasources/proxy/%d", proxy))
 	if err != nil {
 		panic(err)
@@ -85,7 +81,6 @@ func (m Client) queryPrometheus(proxy int, query string, at time.Time) (APIError
 	defer tcancel()
 
 	result, warnings, err := v1api.Query(tctx, query, at)
-
 	if err != nil {
 		return nil, fmt.Errorf("unable to query prometheus: %w", err)
 	}
@@ -101,7 +96,6 @@ func (m Client) queryPrometheus(proxy int, query string, at time.Time) (APIError
 }
 
 func parseMetrics(result model.Value) []APIError {
-
 	res := []APIError{}
 
 	keys := []model.LabelName{"code", "method", "url", "service"}
@@ -148,7 +142,6 @@ func parseMetrics(result model.Value) []APIError {
 
 // extractIdentityFrom extract Identity and Operation from url and method
 func extractIdentityFrom(url, method string) (identity elemental.Identity, operation elemental.Operation, err error) {
-
 	manager := gaia.Manager()
 
 	components := strings.Split(url, "/")
@@ -191,5 +184,4 @@ func extractIdentityFrom(url, method string) (identity elemental.Identity, opera
 	}
 
 	return identity, operation, nil
-
 }

@@ -9,6 +9,11 @@ import (
 	"go.aporeto.io/underwater/logutils"
 )
 
+var (
+	version = "v0.0.0"
+	commit  = "dev"
+)
+
 // MonitoringConf hold the grafana configuration
 // This is used to proxy all requests to datasources
 type MonitoringConf struct {
@@ -49,27 +54,26 @@ type FilterConf struct {
 
 // LogConf is the configuration realted to logs
 type LogConf struct {
-	Log         bool   `mapstructure:"log" desc:"Logs: Enable log mode to get logs from services"`
 	Direction   string `mapstructure:"direction" desc:"Logs: Direction of the logs" default:"forward" allowed:"forward,backward"`
-	Follow      bool   `mapstructure:"follow" desc:"Logs: Follow logs stream in almost real time"`
+	LogFilter   string `mapstructure:"log-filter" desc:"Logs; Optional log filter to append to log query if service flag is used or full logcli filter if not service flag are set"`
 	LogLines    int    `mapstructure:"lines" desc:"Logs: Number of lines to print" default:"10"`
-	LogFilter   string `mapstructure:"log-filter" desc:"Logs; Optional log filter to append to log query"`
+	Log         bool   `mapstructure:"log" desc:"Logs: Enable log mode to get logs from services"`
+	Follow      bool   `mapstructure:"follow" desc:"Logs: Follow logs stream in almost real time"`
 	LogNoLabels bool   `mapstructure:"no-labels" desc:"Logs: Do not display labels with logs"`
 }
 
 // Configuration hold the service configuration.
 type Configuration struct {
-	LoggingConf    `mapstructure:",squash"`
-	FilterConf     `mapstructure:",squash"`
 	MonitoringConf `mapstructure:",squash"`
+	LoggingConf    `mapstructure:",squash"`
+	Open           string `mapstructure:"open" desc:"Traces: Open a given trace to your browser."`
+	ProfileFile    string `mapstructure:"profile-file" desc:"Profile file: the profile file pathto use." default:"~/.tracer/default.yaml"`
+	Stack          string `mapstructure:"stack" desc:"Stack: The stack name to use if any." default:"default"`
+	FilterConf     `mapstructure:",squash"`
 	TimeWindow     `mapstructure:",squash"`
-	TraceConf      `mapstructure:",squash"`
 	LogConf        `mapstructure:",squash"`
-
-	Help        bool   `mapstructure:"help" desc:"Show full help with examples"`
-	Open        string `mapstructure:"open" desc:"Traces: Open a given trace to your browser."`
-	ProfileFile string `mapstructure:"profile-file" desc:"Profile file: the profile file pathto use." default:"~/.tracer/default.yaml"`
-	Stack       string `mapstructure:"stack" desc:"Stack: The stack name to use if any." default:"default"`
+	TraceConf      `mapstructure:",squash"`
+	Help           bool `mapstructure:"help" desc:"Show full help with examples"`
 }
 
 // Prefix returns the configuration prefix.
@@ -77,12 +81,11 @@ func (c *Configuration) Prefix() string { return "tracer" }
 
 // PrintVersion prints the current version.
 func (c *Configuration) PrintVersion() {
-	fmt.Printf("tracer - %s (%s)\n", ProjectVersion, ProjectSha)
+	fmt.Printf("tracer - %s (%s)\n", version, commit)
 }
 
 // NewConfiguration returns a new configuration.
 func NewConfiguration() *Configuration {
-
 	c := &Configuration{}
 	lombric.Initialize(c)
 	logutils.Configure(c.LogLevel, c.LogFormat)

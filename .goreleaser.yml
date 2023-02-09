@@ -1,6 +1,5 @@
 before:
   hooks:
-    - make init
     - make test
 builds:
   - env:

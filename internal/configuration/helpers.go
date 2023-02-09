@@ -9,7 +9,6 @@ import (
 
 // showHelp show a full help
 func showHelp() {
-
 	fmt.Println("Usage:")
 	pflag.PrintDefaults()
 	fmt.Printf(`
@@ -54,7 +53,7 @@ func showHelp() {
 
   ./tracer --log --service squall --log-filter '|~"ERROR"'
 
-> Displau logs with a custom filter
+> Display logs with a custom filter without service
 
   ./tracer --log --log-filter '{type="aporeto",app!~"squall|wutai.*"}|~"ERROR|WARNING"'
 

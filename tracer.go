@@ -79,9 +79,7 @@ func main() {
 		wg.Add(len(results))
 
 		for i := range results {
-
 			go func(index int) {
-
 				defer wg.Done()
 
 				params := monitoring.TracingQueryParameters{
@@ -113,7 +111,6 @@ func main() {
 
 				results[index].Traces = traceResults
 			}(i)
-
 		}
 
 		wg.Wait()
@@ -147,5 +144,4 @@ func main() {
 			fmt.Println("  Or run tracer [--stack <name>] --open <trace>.")
 		}
 	}
-
 }
