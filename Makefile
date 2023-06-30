@@ -1,7 +1,7 @@
 export GO111MODULE = on
 export GOPRIVATE = go.aporeto.io,github.com/aporeto-inc
 
-lint: 
+lint:
 	golangci-lint run \
 		--deadline=5m \
 		--disable-all \
@@ -27,5 +27,9 @@ build_linux: test
 
 build: test
 	go build
+
+# tag it first, then run...
+release:
+	unset GITLAB_TOKEN && goreleaser check && goreleaser release --clean
 
 .PHONY: build
