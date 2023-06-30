@@ -5,10 +5,10 @@ go 1.19
 require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/google/go-querystring v1.1.0
-	github.com/grafana/loki v1.6.2-0.20230526170214-d1fd6b78832e
+	github.com/grafana/loki v1.6.2-0.20230629190929-4b53909ccf0d
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/prometheus/client_golang v1.15.1
+	github.com/prometheus/client_golang v1.16.0
 	github.com/prometheus/common v0.43.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/pflag v1.0.5
@@ -198,7 +198,7 @@ require (
 	github.com/prometheus/client_model v0.4.0 // indirect
 	github.com/prometheus/common/sigv4 v0.1.0 // indirect
 	github.com/prometheus/exporter-toolkit v0.9.1 // indirect
-	github.com/prometheus/procfs v0.9.0 // indirect
+	github.com/prometheus/procfs v0.10.1 // indirect
 	github.com/prometheus/prometheus v0.43.1-0.20230419161410-69155c6ba1e9 // indirect
 	github.com/rivo/uniseg v0.1.0 // indirect
 	github.com/rs/xid v1.4.0 // indirect
@@ -244,7 +244,7 @@ require (
 	golang.org/x/mod v0.9.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/oauth2 v0.7.0 // indirect
-	golang.org/x/sync v0.1.0 // indirect
+	golang.org/x/sync v0.2.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
