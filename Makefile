@@ -3,9 +3,11 @@ export GOPRIVATE = go.aporeto.io,github.com/aporeto-inc
 
 lint:
 	golangci-lint run \
-		--deadline=5m \
+		--timeout=5m \
 		--disable-all \
 		--exclude-use-default=false \
+		--exclude=package-comments \
+		--exclude=unused-parameter \
 		--enable=errcheck \
 		--enable=goimports \
 		--enable=ineffassign \
@@ -17,6 +19,9 @@ lint:
 		--enable=prealloc \
 		--enable=nakedret \
 		--enable=typecheck \
+		--enable=unparam \
+		--enable=gosimple \
+		--enable=nilerr \
 		./...
 
 test: lint
@@ -33,3 +38,7 @@ release:
 	unset GITLAB_TOKEN && goreleaser check && goreleaser release --clean
 
 .PHONY: build
+
+# updating some special components
+#  go get go4.org/unsafe/assume-no-moving-gc@latest
+#  go get -u github.com/grafana/loki@main
