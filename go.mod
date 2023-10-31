@@ -16,7 +16,7 @@ require (
 	go.aporeto.io/elemental v1.123.1-0.20230918174256-2fe0520e6a71
 	go.aporeto.io/gaia v1.94.1-0.20231031160722-02b6313b0d88
 	go.aporeto.io/tg v1.50.1-0.20230918180256-8d9f31bfde7f
-	go.aporeto.io/underwater v1.257.0
+	go.aporeto.io/underwater v1.257.2
 	go.uber.org/zap v1.24.0
 )
 

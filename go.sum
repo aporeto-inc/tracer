@@ -1647,8 +1647,8 @@ go.aporeto.io/tg v1.34.1-0.20220107235943-7d2aaa0dc6f5/go.mod h1:Hgsce79sVOYB4LM
 go.aporeto.io/tg v1.50.0/go.mod h1:LkCXFWQN6LGrp4alU+qzNXoq/nkouQKsOzsjidoKbBc=
 go.aporeto.io/tg v1.50.1-0.20230918180256-8d9f31bfde7f h1:NTluVJtutpLZG1fkeaVurvEt6+0ixWrAtpemAcZwai0=
 go.aporeto.io/tg v1.50.1-0.20230918180256-8d9f31bfde7f/go.mod h1:LkCXFWQN6LGrp4alU+qzNXoq/nkouQKsOzsjidoKbBc=
-go.aporeto.io/underwater v1.257.0 h1:cpuY7XAWTkteJRd//FttAQyZ+aXrdJlPojYVF0BynIE=
-go.aporeto.io/underwater v1.257.0/go.mod h1:288itHQ5yNCgN19FBdHJ0E9poyNQb8ANTKh4dJUcK6Q=
+go.aporeto.io/underwater v1.257.2 h1:GSw8Rf5d71dxJzvU+rhX6UNoxZ/TJZA7/jXduBx5q2E=
+go.aporeto.io/underwater v1.257.2/go.mod h1:288itHQ5yNCgN19FBdHJ0E9poyNQb8ANTKh4dJUcK6Q=
 go.aporeto.io/wsc v1.36.1-0.20210528201141-2af38def4959/go.mod h1:HM/FZMooSnzMT8nMe7XSNA1NnSVtPNdgZ9PUWS4SxOM=
 go.aporeto.io/wsc v1.51.0/go.mod h1:0gL/S3uPkS4f3q7/lXF5Hlt804T0d9EhgOSYJkHUbVo=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
