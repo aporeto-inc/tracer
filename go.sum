@@ -1637,8 +1637,8 @@ go.aporeto.io/elemental v1.123.1-0.20230918174256-2fe0520e6a71 h1:aTLvJIgYcP3hT/
 go.aporeto.io/elemental v1.123.1-0.20230918174256-2fe0520e6a71/go.mod h1:TeftndRimmpTcaBhcdGWVoaRbBgNfGIcl791KRrR3Xw=
 go.aporeto.io/gaia v1.94.1-0.20220608215959-187fca4731d5/go.mod h1:to69cts/frjAC1EsNBe99xazo9Id+nKt4Fd8JbnGWA8=
 go.aporeto.io/gaia v1.94.1-0.20230915210221-8efa1b03f577/go.mod h1:RrUgviecjvgSnj5WmQ1KxIOnmuUE/cB3pvJD6f5wS00=
-go.aporeto.io/gaia v1.94.1-0.20230925164711-27b9d0d2a4e6 h1:C7frb5/GQhVXiLvQalQ2Xk0DvfLX45htzuDMLrodMlI=
-go.aporeto.io/gaia v1.94.1-0.20230925164711-27b9d0d2a4e6/go.mod h1:RrUgviecjvgSnj5WmQ1KxIOnmuUE/cB3pvJD6f5wS00=
+go.aporeto.io/gaia v1.94.1-0.20231031160722-02b6313b0d88 h1:q+Fs6oNul6cUjfxB3YQKaXJXrt/QBjk4b/LDdfRFBfE=
+go.aporeto.io/gaia v1.94.1-0.20231031160722-02b6313b0d88/go.mod h1:RrUgviecjvgSnj5WmQ1KxIOnmuUE/cB3pvJD6f5wS00=
 go.aporeto.io/manipulate v1.121.1-0.20220608215952-c9a469026c2c/go.mod h1:pGAaL2cTHPpPBLLyukfvIi9NzoiAf/pjKX18TaQaYfk=
 go.aporeto.io/manipulate v1.135.0/go.mod h1:+JIw6DIhhmw17YuH/k6uBqxz22CcoqlUjOZ9bwdtx2M=
 go.aporeto.io/regolithe v1.50.1-0.20220308204532-35cc3143a6b4/go.mod h1:PmnnacXq2l9aoPaxKJ+6PseWenoFXdluC3VmYlO4E/A=
@@ -1647,8 +1647,8 @@ go.aporeto.io/tg v1.34.1-0.20220107235943-7d2aaa0dc6f5/go.mod h1:Hgsce79sVOYB4LM
 go.aporeto.io/tg v1.50.0/go.mod h1:LkCXFWQN6LGrp4alU+qzNXoq/nkouQKsOzsjidoKbBc=
 go.aporeto.io/tg v1.50.1-0.20230918180256-8d9f31bfde7f h1:NTluVJtutpLZG1fkeaVurvEt6+0ixWrAtpemAcZwai0=
 go.aporeto.io/tg v1.50.1-0.20230918180256-8d9f31bfde7f/go.mod h1:LkCXFWQN6LGrp4alU+qzNXoq/nkouQKsOzsjidoKbBc=
-go.aporeto.io/underwater v1.257.0 h1:cpuY7XAWTkteJRd//FttAQyZ+aXrdJlPojYVF0BynIE=
-go.aporeto.io/underwater v1.257.0/go.mod h1:288itHQ5yNCgN19FBdHJ0E9poyNQb8ANTKh4dJUcK6Q=
+go.aporeto.io/underwater v1.257.2 h1:GSw8Rf5d71dxJzvU+rhX6UNoxZ/TJZA7/jXduBx5q2E=
+go.aporeto.io/underwater v1.257.2/go.mod h1:288itHQ5yNCgN19FBdHJ0E9poyNQb8ANTKh4dJUcK6Q=
 go.aporeto.io/wsc v1.36.1-0.20210528201141-2af38def4959/go.mod h1:HM/FZMooSnzMT8nMe7XSNA1NnSVtPNdgZ9PUWS4SxOM=
 go.aporeto.io/wsc v1.51.0/go.mod h1:0gL/S3uPkS4f3q7/lXF5Hlt804T0d9EhgOSYJkHUbVo=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
